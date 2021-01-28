@@ -1,0 +1,20 @@
+{
+  "name": "signatureapp",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node www"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "ejs": "~2.5.7",
+    "express": "~4.16.0",
+    "express-joi-validation": "^5.0.0",
+    "express-rate-limit": "^5.2.3",
+    "express-validator": "^6.9.2",
+    "http-errors": "~1.6.2",
+    "joi": "^17.3.0",
+    "morgan": "~1.9.0"
+  }
+}
