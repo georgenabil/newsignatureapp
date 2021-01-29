@@ -30,7 +30,24 @@ const schema = joi.object().keys({
     dateTimeIssued: joi.string().required(), //date
     taxpayerActivityCode:joi.string().required(),
 
-    invoiceLines:joi.array().required()
+    invoiceLines:joi.array().items(
+        joi.object({
+            description: joi.string().required(),
+            itemType:joi.string().required(),
+            itemCode:joi.string().required(),
+            unitType:joi.string().required(),
+            quantity: joi.number().required(),
+            internalCode: joi.string().required(),
+            salesTotal:joi.number().required(),
+            total:joi.number().required(),
+            valueDifference: joi.number().required(),
+            totalTaxableFees: joi.number().required(),
+            netTotal:joi.number().required(),
+            itemsDiscount: joi.number().required(),
+            
+        }).unknown(true)
+     
+    )
 
 }).unknown(true); 
 
@@ -45,7 +62,7 @@ middlewareObj.vaildEnvoice = function(req, res , next){
      if(error){
          res.json(error.details[0]);
      }else{
-        // next();
+         next();
      }
 
 

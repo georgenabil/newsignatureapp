@@ -3,19 +3,16 @@ var fs = require('fs');
 var path = require('path');
 const { spawn } = require('child_process');
 var router = express.Router();
-var errorhanlder; 
 var signerMiddleware = require("../middleware/signatureValidation");
 
 
 
-router.post('/',signerMiddleware.vaildEnvoice, function(req, res, next) { // change it to post request .
+router.post('/' ,signerMiddleware.vaildEnvoice,function(req, res, next) { // change it to post request .
     
-      if(!Object.keys(req.body).length){res.json({ message :"please use json data the body is empty"})}
-      
+       var errorhanlder;
        // of sure is a josn data
       var jsondata = JSON.stringify(req.body,null,4);
-     
-   
+ 
      
     // take data and put it into file nameing confinataion  
     
@@ -63,6 +60,8 @@ router.post('/',signerMiddleware.vaildEnvoice, function(req, res, next) { // cha
           res.json(JSON.parse(data));
         });
 
+     
+     
       }
            
          // delete the following files with following names  CanonicalString.txt , Cades.txt , FullSignedDocument.json , SourceDocumentJson.json

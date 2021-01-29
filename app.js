@@ -22,7 +22,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(limitter({
-  windowMs:3000,
+  windowMs:2000,
   max:1
 }))
 
