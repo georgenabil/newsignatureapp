@@ -7,16 +7,18 @@ var signerMiddleware = require("../middleware/signatureValidation");
 
 
 
-router.post('/' ,signerMiddleware.vaildEnvoice,function(req, res, next) { // change it to post request .
-    
+router.post('/' //,signerMiddleware.vaildEnvoice
+   
+,function(req, res, next) { // change it to post request .
+
+     
        var errorhanlder;
        // of sure is a josn data
       var jsondata = JSON.stringify(req.body,null,4);
- 
-     
+          
     // take data and put it into file nameing confinataion  
     
-    fs.writeFile("../SourceDocumentJson.json",jsondata,function(err){
+   fs.writeFile("../SourceDocumentJson.json",jsondata,function(err){
         
         if(err){
             console.log(err);
@@ -69,8 +71,6 @@ router.post('/' ,signerMiddleware.vaildEnvoice,function(req, res, next) { // cha
 
     });
 
- 
- 
    
 });
 

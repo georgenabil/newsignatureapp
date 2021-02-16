@@ -2,3 +2,4 @@
 /.idea
 /nodemon.json
 /public/uploads/
+/cert/*

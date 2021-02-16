@@ -1,4 +1,5 @@
 var joi = require('joi');
+var fs = require('fs');
 var middlewareObj = {};
 
 const schema = joi.object().keys({
@@ -11,13 +12,13 @@ const schema = joi.object().keys({
             governate: joi.string().required(),
             regionCity: joi.string().required(),
             street:joi.string().required(),
-            buildingNumber: joi.string().required(),
+           /* buildingNumber: joi.string().required(),
             postalCode:joi.string().required(),
             floor:joi.string().required(),
             room:joi.string().required(),
             landmark: joi.string().required(),
-            additionalInformation: joi.string().required(),
-        }).required(), 
+            additionalInformation: joi.string().required(),*/
+        }).unknown(true), 
 
         type:joi.string().required(),
         id:joi.string().required(),
@@ -51,21 +52,47 @@ const schema = joi.object().keys({
 
 }).unknown(true); 
 
+const CompanyNamesToPin = {
+
+    "Ready Mix" : 123456789
+
+} 
+
+
+
 middlewareObj.vaildEnvoice = function(req, res , next){
-    
-        // check if json conatains values 
-      /* if(!Object.keys(req.body).length){ 
-        res.json({ message :"please use json data the body is empty"})}*/
     
      const { error, value } = schema.validate(req.body);
     
      if(error){
          res.json(error.details[0]);
      }else{
-         next();
+         
+        middlewareObj.ConfigCompanyPin(req.body.issuer.name);
+        console.log(req.body.issuer.name);
+        next();
      }
 
 
+}
+
+middlewareObj.ConfigCompanyPin = function(Companyname){
+    
+    let PinCode = CompanyNamesToPin[Companyname];
+   
+    let BatnewFormat =`D:\\EInvoicing\\publish\\EInvoicingSigner.exe  D:\\EInvoicing  ${PinCode}\r\n PAUSE`;
+
+     if(PinCode){ 
+           try{  
+           fs.writeFileSync("../SubmitInvoices.bat",BatnewFormat);
+          }catch(err){
+            console.log(err);
+          }
+       
+    }else{
+         console.log("the company name does`n exit")
+    }
+ 
 }
  
 
